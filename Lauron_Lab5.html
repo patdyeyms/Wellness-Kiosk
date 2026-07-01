@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wellness Kiosk — Health Self-Check</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7.5-4.6-10-9.3C.4 8.1 2 4.5 5.6 4c2.1-.3 4 .8 6.4 3.2C14.4 4.8 16.3 3.7 18.4 4c3.6.5 5.2 4.1 3.6 7.7C19.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        </span>
+        <div>
+          <p class="brand-name">Wellness Self-Check Kiosk</p>
+          <p class="brand-sub">DLSU‑D · College of Information &amp; Computer Studies</p>
+        </div>
+      </div>
+      <div class="status">
+        <time id="liveClock">--:--</time>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap app-grid">
+
+    <section class="intro">
+      <h1>Calculate your BMI, right here.</h1>
+      <p class="intro-copy">Body mass index (BMI) is a measure of body fat based on height and weight that applies to adult men and women. Your BMI is just one piece of the puzzle. It’s based on height and weight but doesn’t take into account your muscle mass, bone density, or body composition.</p>
+
+      <ol class="steps">
+        <li class="step">
+          <span class="step-num">01</span>
+          <div>
+            <p class="step-title">Enter your details</p>
+            <p class="step-copy">Name, age, sex, weight, height.</p>
+          </div>
+        </li>
+        <li class="step">
+          <span class="step-num">02</span>
+          <div>
+            <p class="step-title">See your BMI instantly</p>
+            <p class="step-copy">Placed on the health scale, no waiting.</p>
+          </div>
+        </li>
+        <li class="step">
+          <span class="step-num">03</span>
+          <div>
+            <p class="step-title">Visit logged automatically</p>
+            <p class="step-copy">Synced to the nurse's office sheet.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <div class="panels">
+
+      <!-- FORM PANEL -->
+      <section class="card form-card" aria-label="Self-check form">
+        <form id="bmiForm" novalidate>
+
+          <div class="field">
+            <label for="name">Full name</label>
+            <input type="text" id="name" name="name" placeholder="Juan Dela Cruz" autocomplete="name" required>
+            <span class="error-msg" id="nameError">Please enter your full name.</span>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="age">Age</label>
+              <input type="number" id="age" name="age" min="1" max="120" placeholder="20" inputmode="numeric" required>
+              <span class="error-msg" id="ageError">Enter an age between 1–120.</span>
+            </div>
+
+            <div class="field">
+              <label id="sexLabel">Sex</label>
+              <div class="segmented" role="radiogroup" aria-labelledby="sexLabel" id="sexGroup">
+                <input type="radio" id="sexFemale" name="sex" value="Female" class="segmented-input">
+                <label for="sexFemale" class="segmented-option">Female</label>
+                <input type="radio" id="sexMale" name="sex" value="Male" class="segmented-input">
+                <label for="sexMale" class="segmented-option">Male</label>
+              </div>
+              <span class="error-msg" id="sexError">Please select your sex.</span>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="weight">Weight <span class="unit-hint">kg</span></label>
+              <input type="number" id="weight" name="weight" min="1" step="0.1" placeholder="60" inputmode="decimal" required>
+              <span class="error-msg" id="weightError">Enter a weight greater than 0.</span>
+            </div>
+
+            <div class="field">
+              <label for="height">Height <span class="unit-hint">cm</span></label>
+              <input type="number" id="height" name="height" min="1" step="0.1" placeholder="165" inputmode="decimal" required>
+              <span class="error-msg" id="heightError">Enter a height greater than 0.</span>
+            </div>
+          </div>
+
+          <button type="submit" class="submit-btn" id="submitBtn">
+            <span class="submit-label">Check my BMI</span>
+            <span class="submit-spinner" aria-hidden="true"></span>
+          </button>
+          <p class="form-note" id="formNote" role="alert"></p>
+        </form>
+      </section>
+
+      <!-- RESULT PANEL -->
+      <section class="card result-card" id="resultCard" aria-live="polite" aria-label="Your result">
+
+        <div class="result-empty" id="resultEmpty">
+          <p class="legend-title">The health scale</p>
+          <p class="legend-copy">Your result will land somewhere on this range once you submit.</p>
+
+          <ul class="legend-list">
+            <li class="legend-row">
+              <span class="legend-swatch underweight" aria-hidden="true"></span>
+              <span class="legend-name">Underweight</span>
+              <span class="legend-range">below 18.5</span>
+            </li>
+            <li class="legend-row">
+              <span class="legend-swatch normal" aria-hidden="true"></span>
+              <span class="legend-name">Normal</span>
+              <span class="legend-range">18.5 – 24.9</span>
+            </li>
+            <li class="legend-row">
+              <span class="legend-swatch overweight" aria-hidden="true"></span>
+              <span class="legend-name">Overweight</span>
+              <span class="legend-range">25.0 – 29.9</span>
+            </li>
+            <li class="legend-row">
+              <span class="legend-swatch obese" aria-hidden="true"></span>
+              <span class="legend-name">Obese</span>
+              <span class="legend-range">30.0 and up</span>
+            </li>
+          </ul>
+
+          <p class="legend-formula">BMI = weight (kg) ÷ height (m)²</p>
+        </div>
+
+        <div class="result-content hidden" id="resultContent">
+          <p class="result-eyebrow">Your BMI</p>
+          <p class="result-number"><span id="resultBmiValue">0.0</span><span class="result-unit">kg/m²</span></p>
+          <p class="result-category-pill" id="resultCategory">—</p>
+
+          <div class="gauge" id="gauge">
+            <div class="gauge-track">
+              <span class="gauge-seg seg-underweight"></span>
+              <span class="gauge-seg seg-normal"></span>
+              <span class="gauge-seg seg-overweight"></span>
+              <span class="gauge-seg seg-obese"></span>
+            </div>
+            <div class="gauge-marker" id="gaugeMarker"></div>
+            <div class="gauge-labels">
+              <span>18.5</span><span>25</span><span>30</span>
+            </div>
+          </div>
+
+          <p class="result-message" id="resultMessage"></p>
+
+          <p class="save-status" id="saveStatus"></p>
+
+          <button type="button" class="reset-btn" id="resetBtn">Check another entry</button>
+        </div>
+
+      </section>
+
+    </div>
+
+    <section class="history-section" aria-label="Session entries">
+      <div class="history-head">
+        <h2>Recent entries this session</h2>
+        <span class="history-count" id="historyCount">0</span>
+      </div>
+      <ul class="history-list" id="historyList">
+        <li class="history-empty" id="historyEmpty">
+          <span class="history-empty-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </span>
+          No entries yet — submissions will line up here.
+        </li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Health Self-Check Kiosk · ©2026 Patrick James Lauron</p>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
