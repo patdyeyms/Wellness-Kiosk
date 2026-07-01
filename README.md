@@ -49,8 +49,7 @@ visit for staff to monitor.
 
 ## Live Demo
 
-_(Add your GitHub Pages link here after publishing, e.g.
-`https://patdyeyms.github.io/Wellness-Kiosk/`)_
+https://patdyeyms.github.io/Wellness-Kiosk/
 
 ## Project Structure
 
